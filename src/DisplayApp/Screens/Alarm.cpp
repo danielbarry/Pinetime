@@ -115,7 +115,6 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
                         diff_mins += month_days(i, curyear);
                     }
                     diff_mins = (diff_mins * 24 * 60) - cur_num_minutes + num_minutes;
-                    printf("pranav");
                     printf("%d", diff_mins);
 
                 }
@@ -168,7 +167,6 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
                         diff_mins = (diff_mins * 24 * 60) - cur_num_minutes + num_minutes;
                         printf("%d", diff_mins);
                     }
-                    printf("samee");
                     printf("%d", diff_mins);
                 }
                 else {
