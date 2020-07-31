@@ -6,11 +6,11 @@ namespace Pinetime {
   namespace Controllers {
     class VibrationMotorController {
     public:
-      enum class Levels {Off, On};
+      enum class Level {Off, On};
       void Init();
 
-      void Set(Levels level);
-      Levels Level() const;
+      void Set(Level level);
+      Level GetLevel() const;
       void TurnOn();
       void TurnOff();
 
@@ -20,8 +20,8 @@ namespace Pinetime {
     private:
       static constexpr uint8_t pinVibrationMotor = 16;
 
-      Levels level = Levels::Off;
-      Levels backupLevel = Levels::Off;
+      Level level = Level::Off;
+      Level backupLevel = Level::Off;
     };
   }
 }

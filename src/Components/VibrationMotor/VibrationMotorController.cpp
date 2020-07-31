@@ -9,16 +9,16 @@ void VibrationMotorController::Init() {
   Set(level);
 }
 
-void VibrationMotorController::Set(VibrationMotorController::Levels level) {
+void VibrationMotorController::Set(VibrationMotorController::Level level) {
   this->level = level;
   switch(level) {
     default:
-    case Levels::On:
-      nrf_gpio_pin_clear(pinVibrationMotor);
+    case Level::On:
+      nrf_gpio_pin_set(pinVibrationMotor);
 
       break;
-    case Levels::Off:
-      nrf_gpio_pin_set(pinVibrationMotor);
+    case Level::Off:
+      nrf_gpio_pin_clear(pinVibrationMotor);
 
       break;
   }
@@ -26,7 +26,7 @@ void VibrationMotorController::Set(VibrationMotorController::Levels level) {
 
 void VibrationMotorController::TurnOff() {
   switch(level) {
-    case Levels::On: Set(Levels::Off); break;
+    case Level::On: Set(Level::Off); break;
 
     default: break;
   }
@@ -34,13 +34,13 @@ void VibrationMotorController::TurnOff() {
 
 void VibrationMotorController::TurnOn() {
   switch(level) {
-    case Levels::Off: Set(Levels::On); break;
+    case Level::Off: Set(Level::On); break;
 
     default: break;
   }
 }
 
-VibrationMotorController::Levels VibrationMotorController::Level() const {
+VibrationMotorController::Level VibrationMotorController::GetLevel() const {
   return level;
 }
 
