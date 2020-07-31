@@ -19,8 +19,8 @@ namespace Pinetime {
             lv_obj_t* dd;
 
             //UI functions
-            static void nextdd_event(lv_obj_t* button, lv_event_t event);
-            static void dd_change(lv_obj_t* roller, lv_event_t event);
+            void nextdd_event(lv_obj_t* button, lv_event_t event);
+            void dd_change(lv_obj_t* roller, lv_event_t event);
             int month_number(char month_input[10]);
             int month_days(int num_of_month, int year);
             

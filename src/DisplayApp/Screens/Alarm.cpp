@@ -7,7 +7,7 @@
 
 using namespace Pinetime::Applications::Screens;
 
-static void Alarm::nextdd_event(lv_obj_t* button, lv_event_t event) {
+void Alarm::nextdd_event(lv_obj_t* button, lv_event_t event) {
 
         if (event == LV_BTN_STATE_RELEASED) {
             if (monthinputted == false) {
@@ -131,7 +131,7 @@ static void Alarm::nextdd_event(lv_obj_t* button, lv_event_t event) {
         }
 }
 
-static void Alarm::dd_change(lv_obj_t* roller, lv_event_t event) {
+void Alarm::dd_change(lv_obj_t* roller, lv_event_t event) {
     if (monthinputted == false) {
         lv_roller_get_selected_str(roller, month, 0);
     }
@@ -202,8 +202,6 @@ int month_days(int num_of_month, int year) {
 Alarm::Alarm(Pinetime::Applications::DisplayApp* app){
 
     dd = lv_roller_create(lv_scr_act(), NULL);
-    lv_obj_add_style(dd, LV_CONT_PART_MAIN, &style_box);
-    lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Month");
     lv_obj_set_width(dd, LV_DPI * 2);
     lv_roller_set_options(dd, "January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember", LV_ROLLER_MODE_NORMAL);
     lv_obj_set_event_cb(dd, dd_change);
