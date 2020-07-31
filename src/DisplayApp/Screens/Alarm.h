@@ -1,5 +1,6 @@
 #pragma once
 
+#include <libs/lvgl/src/lv_core/lv_style.h>
 #include <libs/lvgl/src/lv_core/lv_obj.h>
 #include "Screen.h"
 

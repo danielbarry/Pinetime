@@ -67,11 +67,11 @@ int month_days(int num_of_month, int year) {
 }
 
 void nextdd_event(lv_obj_t* button, lv_event_t event) {
-
-        if (event == LV_BTN_STATE_REL) {
+        
+        if (event == LV_EVENT_RELEASED) {
             if (monthinputted == false) {
 
-                lv_roller_set_options(dd, "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31", LV_ROLLER_MODE_NORMAL);
+                lv_ddlist_set_options(dd, "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31");
                 //lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Day");
                 monthinputted = true;
                 printf("%d", strlen(month));
@@ -79,7 +79,7 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
             }
             else if (dayinputted == false) {
 
-                lv_roller_set_options(dd, "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23", LV_ROLLER_MODE_NORMAL);
+                lv_ddlist_set_options(dd, "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23");
                 //v_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Hour");
                 dayinputted = true;
                 printf("%d", day);
@@ -87,7 +87,7 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
             }
             else if (hourinputted == false) {
 
-                lv_roller_set_options(dd, "00\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50\n51\n52\n53\n54\n55\n56\n57\n58\n59", LV_ROLLER_MODE_NORMAL);
+                lv_ddlist_set_options(dd, "00\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50\n51\n52\n53\n54\n55\n56\n57\n58\n59");
                 //lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Minute");
                 lv_obj_t* label = lv_obj_get_child(button, NULL);
                 lv_label_set_text(label, "Set Alarm");
@@ -190,23 +190,23 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
         }
 }
 
-void dd_change(lv_obj_t* roller, lv_event_t event) {
+void dd_change(lv_obj_t* ddlist, lv_event_t event) {
     if (monthinputted == false) {
-        lv_roller_get_selected_str(roller, month, 0);
+        lv_ddlist_get_selected_str(ddlist, month, 0);
     }
     else if (dayinputted == false) {
         char daystr[10];
-        lv_roller_get_selected_str(roller, daystr, 0);
+        lv_ddlist_get_selected_str(ddlist, daystr, 0);
         day = atoi(daystr);
     }
     else if (hourinputted == false) {
         char hourstr[10];
-        lv_roller_get_selected_str(roller, hourstr, 0);
+        lv_ddlist_get_selected_str(ddlist, hourstr, 0);
         hour = atoi(hourstr);
     }
     else {
         char minstr[10];
-        lv_roller_get_selected_str(roller, minstr, 0);
+        lv_ddlist_get_selected_str(ddlist, minstr, 0);
         minute = atoi(minstr);
     }
 }
@@ -214,21 +214,24 @@ void dd_change(lv_obj_t* roller, lv_event_t event) {
 
 
 Alarm::Alarm(Pinetime::Applications::DisplayApp* app):Screen(app){
+    
 
-    dd = lv_roller_create(lv_scr_act(), NULL);
+    dd = lv_ddlist_create(lv_scr_act(), NULL);
     lv_obj_set_width(dd, LV_DPI * 2);
-    lv_roller_set_options(dd, "January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember", LV_ROLLER_MODE_NORMAL);
-    lv_obj_set_event_cb(dd, dd_change);
-    lv_obj_align(dd, NULL, LV_ALIGN_IN_TOP_MID, 0, 0);
-
+    lv_obj_set_height(dd, 50);
+    lv_ddlist_set_options(dd, "January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember");
+    //lv_obj_set_event_cb(dd, dd_change);
+    lv_ddlist_set_fix_height(dd, 135);
+    lv_obj_align(dd, NULL, LV_ALIGN_IN_TOP_MID, 0, 25);
+    
     
     
     lv_obj_t* label;
 
     lv_obj_t* btn1 = lv_btn_create(lv_scr_act(), NULL);
-    lv_obj_set_event_cb(btn1, nextdd_event);
-    lv_obj_align(btn1, NULL, LV_ALIGN_OUT_BOTTOM_MID, 0, 0);
-
+    //lv_obj_set_event_cb(btn1, nextdd_event);
+    lv_obj_align(btn1, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -20);
+    lv_btn_set_fit2(btn1, LV_FIT_TIGHT, LV_FIT_TIGHT);
 
     label = lv_label_create(btn1, NULL);
     lv_label_set_text(label, "Next");
