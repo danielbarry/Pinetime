@@ -333,6 +333,7 @@ list(APPEND SOURCE_FILES
   DisplayApp/Screens/BatteryIcon.cpp
   DisplayApp/Screens/BleIcon.cpp
   DisplayApp/Screens/Brightness.cpp
+  DisplayApp/Screens/Alarm.cpp
   DisplayApp/Screens/ScreenList.cpp
   DisplayApp/Screens/Label.cpp
   DisplayApp/Screens/FirmwareUpdate.cpp
@@ -410,6 +411,7 @@ set(INCLUDE_FILES
   DisplayApp/Screens/BatteryIcon.h
   DisplayApp/Screens/BleIcon.cpp
   DisplayApp/Screens/Brightness.h
+  DisplayApp/Screens/Alarm.h      
   DisplayApp/Screens/ScreenList.h
   DisplayApp/Screens/Label.h
   DisplayApp/Screens/FirmwareUpdate.h
