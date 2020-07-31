@@ -90,7 +90,7 @@ void Tile::StartBrightnessApp() {
 }
 
 void Tile::StartMeterApp() {
-  app->StartApp(DisplayApp::Apps::Meter);
+  app->StartApp(DisplayApp::Apps::Alarm);
   running = false;
 }
 
