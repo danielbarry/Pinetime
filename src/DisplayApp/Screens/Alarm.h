@@ -8,31 +8,26 @@ namespace Pinetime {
     namespace Screens {
       class Alarm: public Screen{
         public:
+
             Alarm(DisplayApp* app);
             ~Alarm() override;
             bool Refresh() override;
             bool OnButtonPushed() override;
+            int month_number(char month_input[10]);
+            int month_days(int num_of_month, int year);
+            //void nextdd_event(lv_obj_t* button, lv_event_t event);
+       
         private:
 
             bool running = true;
             //pointers to LVGL objects
-            lv_obj_t* dd;
 
-            //UI functions
-            void nextdd_event(lv_obj_t* button, lv_event_t event);
-            void dd_change(lv_obj_t* roller, lv_event_t event);
-            int month_number(char month_input[10]);
-            int month_days(int num_of_month, int year);
+
+
+
+
             
-            //Variables for alarm information
-            char month[9];
-            int day;
-            int hour;
-            int minute;
 
-            bool monthinputted = false;
-            bool dayinputted = false;
-            bool hourinputted = false;
 
     
             

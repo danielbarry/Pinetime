@@ -1,19 +1,78 @@
-#include <cstdio>
-#include <libs/date/includes/date/date.h>
-#include <Components/DateTime/DateTimeController.h>
+//#include <cstdio>
+//#include <libs/date/includes/date/date.h>
+//#include <Components/DateTime/DateTimeController.h>
 #include <libs/lvgl/lvgl.h>
 #include "Alarm.h"
 #include "../DisplayApp.h"
 
 using namespace Pinetime::Applications::Screens;
 
-void Alarm::nextdd_event(lv_obj_t* button, lv_event_t event) {
+//
+lv_obj_t* dd;
+//Variables for alarm information
+char month[9];
+int day;
+int hour;
+int minute;
 
-        if (event == LV_BTN_STATE_RELEASED) {
+bool monthinputted = false;
+bool dayinputted = false;
+bool hourinputted = false;
+
+int month_number(char month_input[10]) {
+
+    
+    if (strcmp(month_input, "January") == 0)
+        return 1;
+    else if (strcmp(month_input, "February") == 0)
+        return 2;
+    else if (strcmp(month_input, "March") == 0)
+        return 3;
+    else if (strcmp(month_input, "April") == 0)
+        return 4;
+    else if (strcmp(month_input, "May") == 0)
+        return 5;
+    else if (strcmp(month_input, "June") == 0)
+        return 6;
+    else if (strcmp(month_input, "July") == 0)
+        return 7;
+    else if (strcmp(month_input, "August") == 0)
+        return 8;
+    else if (strcmp(month_input, "September") == 0)
+        return 9;
+    else if (strcmp(month_input, "October") == 0)
+        return 10;
+    else if (strcmp(month_input, "November") == 0)
+        return 11;
+    else if (strcmp(month_input, "December") == 0)
+        return 12;
+    else
+        return 0;
+    
+
+              
+}
+
+int month_days(int num_of_month, int year) {
+    if (num_of_month == 1 || num_of_month == 3 || num_of_month == 5 || num_of_month == 7 || num_of_month == 8 || num_of_month == 10 || num_of_month == 12)
+        return 31;
+    else if (num_of_month == 2) {
+        if (year % 4 == 0)
+            return 29;
+        else
+            return 28;
+    }
+    else
+        return 30;
+}
+
+void nextdd_event(lv_obj_t* button, lv_event_t event) {
+
+        if (event == LV_BTN_STATE_REL) {
             if (monthinputted == false) {
 
                 lv_roller_set_options(dd, "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31", LV_ROLLER_MODE_NORMAL);
-                lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Day");
+                //lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Day");
                 monthinputted = true;
                 printf("%d", strlen(month));
                 printf("next");
@@ -21,7 +80,7 @@ void Alarm::nextdd_event(lv_obj_t* button, lv_event_t event) {
             else if (dayinputted == false) {
 
                 lv_roller_set_options(dd, "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23", LV_ROLLER_MODE_NORMAL);
-                lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Hour");
+                //v_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Hour");
                 dayinputted = true;
                 printf("%d", day);
                 printf("next");
@@ -29,7 +88,7 @@ void Alarm::nextdd_event(lv_obj_t* button, lv_event_t event) {
             else if (hourinputted == false) {
 
                 lv_roller_set_options(dd, "00\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50\n51\n52\n53\n54\n55\n56\n57\n58\n59", LV_ROLLER_MODE_NORMAL);
-                lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Minute");
+                //lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Minute");
                 lv_obj_t* label = lv_obj_get_child(button, NULL);
                 lv_label_set_text(label, "Set Alarm");
                 hourinputted = true;
@@ -131,7 +190,7 @@ void Alarm::nextdd_event(lv_obj_t* button, lv_event_t event) {
         }
 }
 
-void Alarm::dd_change(lv_obj_t* roller, lv_event_t event) {
+void dd_change(lv_obj_t* roller, lv_event_t event) {
     if (monthinputted == false) {
         lv_roller_get_selected_str(roller, month, 0);
     }
@@ -152,54 +211,9 @@ void Alarm::dd_change(lv_obj_t* roller, lv_event_t event) {
     }
 }
 
-int month_number(char month_input[10]) {
 
-    
-    if (strcmp(month_input, "January") == 0)
-        return 1;
-    else if (strcmp(month_input, "February") == 0)
-        return 2;
-    else if (strcmp(month_input, "March") == 0)
-        return 3;
-    else if (strcmp(month_input, "April") == 0)
-        return 4;
-    else if (strcmp(month_input, "May") == 0)
-        return 5;
-    else if (strcmp(month_input, "June") == 0)
-        return 6;
-    else if (strcmp(month_input, "July") == 0)
-        return 7;
-    else if (strcmp(month_input, "August") == 0)
-        return 8;
-    else if (strcmp(month_input, "September") == 0)
-        return 9;
-    else if (strcmp(month_input, "October") == 0)
-        return 10;
-    else if (strcmp(month_input, "November") == 0)
-        return 11;
-    else if (strcmp(month_input, "December") == 0)
-        return 12;
-    else
-        return 0;
-    
 
-              
-}
-
-int month_days(int num_of_month, int year) {
-    if (num_of_month == 1 || num_of_month == 3 || num_of_month == 5 || num_of_month == 7 || num_of_month == 8 || num_of_month == 10 || num_of_month == 12)
-        return 31;
-    else if (num_of_month == 2) {
-        if (year % 4 == 0)
-            return 29;
-        else
-            return 28;
-    }
-    else
-        return 30;
-}
-
-Alarm::Alarm(Pinetime::Applications::DisplayApp* app){
+Alarm::Alarm(Pinetime::Applications::DisplayApp* app):Screen(app){
 
     dd = lv_roller_create(lv_scr_act(), NULL);
     lv_obj_set_width(dd, LV_DPI * 2);
@@ -219,6 +233,8 @@ Alarm::Alarm(Pinetime::Applications::DisplayApp* app){
     label = lv_label_create(btn1, NULL);
     lv_label_set_text(label, "Next");
 }
+
+
 
 Alarm::~Alarm() {
   lv_obj_clean(lv_scr_act());

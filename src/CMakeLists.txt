@@ -287,6 +287,10 @@ set(LVGL_SRC
   libs/lvgl/src/lv_objx/lv_bar.h
   libs/lvgl/src/lv_objx/lv_slider.h
   libs/lvgl/src/lv_objx/lv_slider.c
+  libs/lvgl/src/lv_objx/lv_roller.h
+  libs/lvgl/src/lv_objx/lv_roller.c
+  libs/lvgl/src/lv_objx/lv_ddlist.h
+  libs/lvgl/src/lv_objx/lv_ddlist.c
   )
 
 list(APPEND IMAGE_FILES

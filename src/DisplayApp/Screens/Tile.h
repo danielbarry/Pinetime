@@ -50,6 +50,7 @@ namespace Pinetime {
           void StartSysInfoApp();
           void StartMeterApp();
           void StartGaugeApp();
+          void StartAlarmApp();
           bool running = true;
 
           std::unique_ptr<Modal> modal;

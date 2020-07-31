@@ -43,7 +43,7 @@ void Tile::OnObjectEvent(lv_obj_t *obj, lv_event_t event, uint32_t buttonId) {
   if(event == LV_EVENT_VALUE_CHANGED) {
     switch(buttonId) {
       case 0:
-        tile->StartMeterApp();
+        tile->StartAlarmApp();
         break;
       case 1:
         tile->StartGaugeApp();
@@ -90,7 +90,7 @@ void Tile::StartBrightnessApp() {
 }
 
 void Tile::StartMeterApp() {
-  app->StartApp(DisplayApp::Apps::Alarm);
+  app->StartApp(DisplayApp::Apps::Meter);
   running = false;
 }
 
@@ -98,4 +98,7 @@ void Tile::StartGaugeApp() {
   app->StartApp(DisplayApp::Apps::Gauge);
   running = false;
 }
-
+void Tile::StartAlarmApp() {
+  app->StartApp(DisplayApp::Apps::Alarm);
+  running = false;
+}

@@ -15,10 +15,11 @@
 #include <DisplayApp/Screens/Gauge.h>
 #include <DisplayApp/Screens/Brightness.h>
 #include <DisplayApp/Screens/ScreenList.h>
+#include <DisplayApp/Screens/Alarm.h>
 #include <Components/Ble/NotificationManager.h>
 #include <DisplayApp/Screens/FirmwareUpdate.h>
 #include "../SystemTask/SystemTask.h"
-#include <DisplayApp/Screens/Alarm.h>
+
 
 
 using namespace Pinetime::Applications;
