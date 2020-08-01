@@ -93,7 +93,7 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
                 lv_label_set_text(label, "Set Alarm");
                 hourinputted = true;
                 printf("%d", hour);
-
+                
             }
             else {
                 char curmonth[10] = "July";
@@ -211,7 +211,7 @@ void dd_change(lv_obj_t* ddlist, lv_event_t event) {
 
 
 
-Alarm::Alarm(Pinetime::Applications::DisplayApp* app):Screen(app){
+Alarm::Alarm(Pinetime::Applications::DisplayApp* app, Controllers::VibrationMotorController& vibrationmotor) : Screen(app), vibrationmotor{vibrationmotor} {
     
 
     dd = lv_ddlist_create(lv_scr_act(), NULL);
@@ -227,12 +227,13 @@ Alarm::Alarm(Pinetime::Applications::DisplayApp* app):Screen(app){
     lv_obj_t* label;
 
     lv_obj_t* btn1 = lv_btn_create(lv_scr_act(), NULL);
-    //lv_obj_set_event_cb(btn1, nextdd_event);
+    lv_obj_set_event_cb(btn1, nextdd_event);
     lv_obj_align(btn1, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -20);
     lv_btn_set_fit2(btn1, LV_FIT_TIGHT, LV_FIT_TIGHT);
 
     label = lv_label_create(btn1, NULL);
     lv_label_set_text(label, "Next");
+    vibrationmotor.TurnOn();
 }
 
 
