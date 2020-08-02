@@ -218,7 +218,7 @@ Alarm::Alarm(Pinetime::Applications::DisplayApp* app):Screen(app){
     lv_obj_set_width(dd, LV_DPI * 2);
     lv_obj_set_height(dd, 50);
     lv_ddlist_set_options(dd, "January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember");
-    //lv_obj_set_event_cb(dd, dd_change);
+    lv_obj_set_event_cb(dd, dd_change);
     lv_ddlist_set_fix_height(dd, 135);
     lv_obj_align(dd, NULL, LV_ALIGN_IN_TOP_MID, 0, 25);
     
@@ -227,7 +227,7 @@ Alarm::Alarm(Pinetime::Applications::DisplayApp* app):Screen(app){
     lv_obj_t* label;
 
     lv_obj_t* btn1 = lv_btn_create(lv_scr_act(), NULL);
-    //lv_obj_set_event_cb(btn1, nextdd_event);
+    lv_obj_set_event_cb(btn1, nextdd_event);
     lv_obj_align(btn1, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -20);
     lv_btn_set_fit2(btn1, LV_FIT_TIGHT, LV_FIT_TIGHT);
 
