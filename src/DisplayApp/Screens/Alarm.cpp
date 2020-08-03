@@ -1,6 +1,7 @@
-//#include <cstdio>
+#include <cstdio>
 //#include <libs/date/includes/date/date.h>
 //#include <Components/DateTime/DateTimeController.h>
+#include <libraries/log/nrf_log.h>
 #include <libs/lvgl/lvgl.h>
 #include "Alarm.h"
 #include "../DisplayApp.h"
@@ -74,16 +75,16 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
                 lv_ddlist_set_options(dd, "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31");
                 //lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Day");
                 monthinputted = true;
-                printf("%d", strlen(month));
-                printf("next");
+                NRF_LOG_INFO("%d", strlen(month));
+                NRF_LOG_INFO("next");
             }
             else if (dayinputted == false) {
 
                 lv_ddlist_set_options(dd, "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23");
                 //v_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Hour");
                 dayinputted = true;
-                printf("%d", day);
-                printf("next");
+                NRF_LOG_INFO("%d", day);
+                NRF_LOG_INFO("next");
             }
             else if (hourinputted == false) {
 
@@ -92,7 +93,7 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
                 lv_obj_t* label = lv_obj_get_child(button, NULL);
                 lv_label_set_text(label, "Set Alarm");
                 hourinputted = true;
-                printf("%d", hour);
+                NRF_LOG_INFO("%d", hour);
                 
             }
             else {
@@ -115,7 +116,7 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
                         diff_mins += month_days(i, curyear);
                     }
                     diff_mins = (diff_mins * 24 * 60) - cur_num_minutes + num_minutes;
-                    printf("%d", diff_mins);
+                    NRF_LOG_INFO("%d", diff_mins);
 
                 }
                 else if (curmonth_num == month_num) {
@@ -145,7 +146,7 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
                         }
                         else if (hour > curhour) {
                             diff_mins = num_minutes - cur_num_minutes;
-                            printf("%d", diff_mins);
+                            NRF_LOG_INFO("%d", diff_mins);
                         }
                         else {
                             if((curyear + 1)%4 ==0)
@@ -165,9 +166,9 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
                             diff_mins += month_days(i, curyear+1);
                         }
                         diff_mins = (diff_mins * 24 * 60) - cur_num_minutes + num_minutes;
-                        printf("%d", diff_mins);
+                        NRF_LOG_INFO("%d", diff_mins);
                     }
-                    printf("%d", diff_mins);
+                    NRF_LOG_INFO("%d", diff_mins);
                 }
                 else {
                     diff_mins += month_days(curmonth_num, curyear) - curday;
@@ -180,7 +181,7 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
                         diff_mins += month_days(i, curyear+1);
                     }
                     diff_mins = (diff_mins * 24 * 60) - cur_num_minutes + num_minutes;
-                    printf("%d", diff_mins);
+                    NRF_LOG_INFO("%d", diff_mins);
                 }
 
             }
@@ -189,23 +190,25 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
 }
 
 void dd_change(lv_obj_t* ddlist, lv_event_t event) {
-    if (monthinputted == false) {
-        lv_ddlist_get_selected_str(ddlist, month, 0);
-    }
-    else if (dayinputted == false) {
-        char daystr[10];
-        lv_ddlist_get_selected_str(ddlist, daystr, 0);
-        day = atoi(daystr);
-    }
-    else if (hourinputted == false) {
-        char hourstr[10];
-        lv_ddlist_get_selected_str(ddlist, hourstr, 0);
-        hour = atoi(hourstr);
-    }
-    else {
-        char minstr[10];
-        lv_ddlist_get_selected_str(ddlist, minstr, 0);
-        minute = atoi(minstr);
+    if(event ==  LV_EVENT_VALUE_CHANGED){
+        if (monthinputted == false) {
+            lv_ddlist_get_selected_str(ddlist, month, 0);
+        }
+        else if (dayinputted == false) {
+            char daystr[10];
+            lv_ddlist_get_selected_str(ddlist, daystr, 0);
+            day = atoi(daystr);
+        }
+        else if (hourinputted == false) {
+            char hourstr[10];
+            lv_ddlist_get_selected_str(ddlist, hourstr, 0);
+            hour = atoi(hourstr);
+        }
+        else {
+            char minstr[10];
+            lv_ddlist_get_selected_str(ddlist, minstr, 0);
+            minute = atoi(minstr);
+        }
     }
 }
 
@@ -218,7 +221,7 @@ Alarm::Alarm(Pinetime::Applications::DisplayApp* app, Controllers::VibrationMoto
     lv_obj_set_width(dd, LV_DPI * 2);
     lv_obj_set_height(dd, 50);
     lv_ddlist_set_options(dd, "January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember");
-    //lv_obj_set_event_cb(dd, dd_change);
+    lv_obj_set_event_cb(dd, dd_change);
     lv_ddlist_set_fix_height(dd, 135);
     lv_obj_align(dd, NULL, LV_ALIGN_IN_TOP_MID, 0, 25);
     
