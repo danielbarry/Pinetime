@@ -5,6 +5,7 @@
 #include "Alarm.h"
 #include "../DisplayApp.h"
 
+
 using namespace Pinetime::Applications::Screens;
 
 //
@@ -218,7 +219,7 @@ Alarm::Alarm(Pinetime::Applications::DisplayApp* app, Controllers::VibrationMoto
     lv_obj_set_width(dd, LV_DPI * 2);
     lv_obj_set_height(dd, 50);
     lv_ddlist_set_options(dd, "January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember");
-    lv_obj_set_event_cb(dd, dd_change);
+    //lv_obj_set_event_cb(dd, dd_change);
     lv_ddlist_set_fix_height(dd, 135);
     lv_obj_align(dd, NULL, LV_ALIGN_IN_TOP_MID, 0, 25);
     
@@ -233,7 +234,8 @@ Alarm::Alarm(Pinetime::Applications::DisplayApp* app, Controllers::VibrationMoto
 
     label = lv_label_create(btn1, NULL);
     lv_label_set_text(label, "Next");
-    vibrationmotor.TurnOn();
+
+    //vibrationmotor.TurnOn();
 }
 
 

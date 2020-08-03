@@ -14,11 +14,11 @@ void VibrationMotorController::Set(VibrationMotorController::Level level) {
   switch(level) {
     default:
     case Level::On:
-      nrf_gpio_pin_set(pinVibrationMotor);
+      nrf_gpio_pin_clear(pinVibrationMotor);
 
       break;
     case Level::Off:
-      nrf_gpio_pin_clear(pinVibrationMotor);
+      nrf_gpio_pin_set(pinVibrationMotor);
 
       break;
   }
