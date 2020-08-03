@@ -10,6 +10,7 @@
 #include <Components/DateTime/DateTimeController.h>
 #include "Components/Battery/BatteryController.h"
 #include "Components/Ble/BleController.h"
+#include "Components/VibrationMotor/VibrationMotorController.h"
 #include <drivers/St7789.h>
 #include <drivers/SpiMaster.h>
 #include <drivers/Spi.h>
@@ -77,6 +78,7 @@ TimerHandle_t debounceTimer;
 Pinetime::Controllers::Battery batteryController;
 Pinetime::Controllers::Ble bleController;
 Pinetime::Controllers::DateTime dateTimeController;
+Pinetime::Controllers::VibrationMotorController vibrationmotor;
 void ble_manager_set_ble_connection_callback(void (*connection)());
 void ble_manager_set_ble_disconnection_callback(void (*disconnection)());
 static constexpr uint8_t pinTouchIrq = 28;
@@ -225,7 +227,7 @@ int main(void) {
   debounceTimer = xTimerCreate ("debounceTimer", 200, pdFALSE, (void *) 0, DebounceTimerCallback);
 
   systemTask.reset(new Pinetime::System::SystemTask(spi, lcd, spiNorFlash, twiMaster, touchPanel, lvgl, batteryController, bleController,
-                                                    dateTimeController, notificationManager));
+                                                    dateTimeController, notificationManager, vibrationmotor));
   systemTask->Start();
   nimble_port_init();
 

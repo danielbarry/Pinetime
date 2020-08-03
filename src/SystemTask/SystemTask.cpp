@@ -28,11 +28,12 @@ SystemTask::SystemTask(Drivers::SpiMaster &spi, Drivers::St7789 &lcd,
                        Drivers::TwiMaster& twiMaster, Drivers::Cst816S &touchPanel,
                        Components::LittleVgl &lvgl,
                        Controllers::Battery &batteryController, Controllers::Ble &bleController,
-                       Controllers::DateTime &dateTimeController,
-                       Pinetime::Controllers::NotificationManager& notificationManager) :
+                       Controllers::DateTime &dateTimeController, 
+                       Pinetime::Controllers::NotificationManager& notificationManager, Pinetime::Controllers::VibrationMotorController &vibrationmotor) :
+                       
                        spi{spi}, lcd{lcd}, spiNorFlash{spiNorFlash},
                        twiMaster{twiMaster}, touchPanel{touchPanel}, lvgl{lvgl}, batteryController{batteryController},
-                       bleController{bleController}, dateTimeController{dateTimeController},
+                       bleController{bleController}, vibrationmotor{vibrationmotor}, dateTimeController{dateTimeController}, 
                        watchdog{}, watchdogView{watchdog}, notificationManager{notificationManager},
                        nimbleController(*this, bleController,dateTimeController, notificationManager, spiNorFlash) {
   systemTaksMsgQueue = xQueueCreate(10, 1);
@@ -72,6 +73,7 @@ void SystemTask::Work() {
   twiMaster.Init();
   touchPanel.Init();
   batteryController.Init();
+  vibrationmotor.Init();
 
   displayApp.reset(new Pinetime::Applications::DisplayApp(lcd, lvgl, touchPanel, batteryController, bleController,
                                                           dateTimeController, watchdogView, *this, notificationManager));

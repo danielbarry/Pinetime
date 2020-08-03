@@ -8,6 +8,7 @@
 #include <queue.h>
 #include <Components/Battery/BatteryController.h>
 #include <Components/Brightness/BrightnessController.h>
+#include <Components/VibrationMotor/VibrationMotorController.h>
 #include <Components/Ble/BleController.h>
 #include <Components/DateTime/DateTimeController.h>
 #include "../drivers/Cst816s.h"
@@ -78,6 +79,8 @@ namespace Pinetime {
         Apps nextApp = Apps::None;
         bool onClockApp = false; // TODO find a better way to know that we should handle gestures and button differently for the Clock app.
         Controllers::BrightnessController brightnessController;
+        Controllers::VibrationMotorController vibrationMotorController;
+
         std::unique_ptr<Screens::Modal> modal;
         Pinetime::Controllers::NotificationManager& notificationManager;
     };

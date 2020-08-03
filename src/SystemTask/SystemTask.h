@@ -6,6 +6,7 @@
 #include <drivers/SpiMaster.h>
 #include <drivers/St7789.h>
 #include <Components/Battery/BatteryController.h>
+#include <Components/VibrationMotor/VibrationMotorController.h>
 #include <DisplayApp/DisplayApp.h>
 #include <drivers/Watchdog.h>
 #include <Components/Ble/NimbleController.h>
@@ -26,7 +27,7 @@ namespace Pinetime {
                    Components::LittleVgl &lvgl,
                    Controllers::Battery &batteryController, Controllers::Ble &bleController,
                    Controllers::DateTime &dateTimeController,
-                   Pinetime::Controllers::NotificationManager& manager);
+                   Pinetime::Controllers::NotificationManager& manager, Pinetime::Controllers::VibrationMotorController &vibrationmotor);
 
 
         void Start();
@@ -49,6 +50,7 @@ namespace Pinetime {
         Pinetime::Controllers::Battery& batteryController;
         std::unique_ptr<Pinetime::Applications::DisplayApp> displayApp;
         Pinetime::Controllers::Ble& bleController;
+        Pinetime::Controllers::VibrationMotorController &vibrationmotor;
         Pinetime::Controllers::DateTime& dateTimeController;
         QueueHandle_t systemTaksMsgQueue;
         bool isSleeping = false;
