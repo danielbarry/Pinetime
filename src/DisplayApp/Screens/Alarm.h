@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <FreeRTOS.h>
 #include <libs/lvgl/src/lv_core/lv_style.h>
 #include <libs/lvgl/src/lv_core/lv_obj.h>
 #include <Components/VibrationMotor/VibrationMotorController.h>
