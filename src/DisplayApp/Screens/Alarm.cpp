@@ -1,6 +1,7 @@
 #include <cstdio>
 //#include <libs/date/includes/date/date.h>
 //#include <Components/DateTime/DateTimeController.h>
+
 #include <libraries/log/nrf_log.h>
 #include <libs/lvgl/lvgl.h>
 #include "Alarm.h"
@@ -22,7 +23,7 @@ bool monthinputted = false;
 bool dayinputted = false;
 bool hourinputted = false;
 
-void alarmCallback(TimerHand_t xTimer){
+void alarmCallback(TimerHandle_t xTimer){
     NRF_LOG_INFO("TIMER CALLED AFTER ONE MINUTE");
     
 }
@@ -191,8 +192,10 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
                     NRF_LOG_INFO("%d", diff_mins);
                 }
 
-                alarmTimer = xTimerCreate ("alarmTimer", pdMS_TO_TICKS(60000), pdFALSE, this, alarmCallback);
-                xTimerStart(alarmTimer, 0);
+
+                //alarmTimer = xTimerCreate ("alarmTimer", pdMS_TO_TICKS(60000), pdFALSE, pvTimerGetTimerID(alarmTimer), alarmCallback);
+                //xTimerStart(alarmTimer, 0);
+                NRF_LOG_INFO("alarm started");
 
             }
 
