@@ -10,6 +10,7 @@
 
 using namespace Pinetime::Applications::Screens;
 
+
 //
 lv_obj_t* dd;
 TimerHandle_t alarmTimer;
@@ -25,7 +26,7 @@ bool hourinputted = false;
 
 void alarmCallback(TimerHandle_t xTimer){
     NRF_LOG_INFO("TIMER CALLED AFTER ONE MINUTE");
-    
+
 }
 
 int month_number(char month_input[10]) {
@@ -193,8 +194,8 @@ void nextdd_event(lv_obj_t* button, lv_event_t event) {
                 }
 
 
-                //alarmTimer = xTimerCreate ("alarmTimer", pdMS_TO_TICKS(60000), pdFALSE, pvTimerGetTimerID(alarmTimer), alarmCallback);
-                //xTimerStart(alarmTimer, 0);
+                alarmTimer = xTimerCreate ("alarmTimer", pdMS_TO_TICKS(60000), pdFALSE, (void * ) 0, alarmCallback);
+                xTimerStart(alarmTimer, 0);
                 NRF_LOG_INFO("alarm started");
 
             }
