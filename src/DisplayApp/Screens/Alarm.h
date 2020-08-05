@@ -19,17 +19,33 @@ namespace Pinetime {
             bool OnButtonPushed() override;
             int month_number(char month_input[10]);
             int month_days(int num_of_month, int year);
-            //void alarmCallback(TimerHandle_t xTimer)
-            //void nextdd_event(lv_obj_t* button, lv_event_t event);
             //bool OnTouchEvent(TouchEvents event) override;
 
        
         private:
-
             bool running = true;
             Controllers::VibrationMotorController& vibrationmotor;
-            //pointers to LVGL objects
 
+            //functions
+            void nextDDList();
+            void alarmStart();
+            //pointers to LVGL objects
+            lv_obj_t* dd;
+            lv_obj_t* label;
+            lv_obj_t* btn1;
+
+            //timer variable declaration
+            TimerHandle_t alarmTimer;
+
+            //variables for alarm information
+            char month[9];
+            int day;
+            int hour;
+            int minute;
+
+            bool monthinputted = false;
+            bool dayinputted = false;
+            bool hourinputted = false;
 
 
 
