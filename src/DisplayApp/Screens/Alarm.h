@@ -2,6 +2,7 @@
 
 #include <FreeRTOS.h>
 #include <timers.h>
+
 #include <libs/lvgl/src/lv_core/lv_style.h>
 #include <libs/lvgl/src/lv_core/lv_obj.h>
 #include <Components/VibrationMotor/VibrationMotorController.h>
@@ -17,18 +18,17 @@ namespace Pinetime {
             ~Alarm() override;
             bool Refresh() override;
             bool OnButtonPushed() override;
-            int month_number(char month_input[10]);
-            int month_days(int num_of_month, int year);
-            //bool OnTouchEvent(TouchEvents event) override;
 
+            //bool OnTouchEvent(TouchEvents event) override;
+            //functions
+            void nextDDList();
+            void alarmStart();
        
         private:
             bool running = true;
             Controllers::VibrationMotorController& vibrationmotor;
 
-            //functions
-            void nextDDList();
-            void alarmStart();
+
             //pointers to LVGL objects
             lv_obj_t* dd;
             lv_obj_t* label;
@@ -48,13 +48,6 @@ namespace Pinetime {
             bool hourinputted = false;
 
 
-
-
-            
-
-
-    
-            
       };
     }
   }

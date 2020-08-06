@@ -61,7 +61,9 @@ void xtimerCallback(TimerHandle_t xTimer){
 }
 
 void nextdd_event(lv_obj_t* dropdown, lv_event_t event) {
+    NRF_LOG_INFO("button pressed");
     if (event == LV_EVENT_RELEASED) {
+        
         auto* ddList = static_cast<Alarm*>(dropdown->user_data);
         ddList->nextDDList();
     }    
@@ -73,7 +75,7 @@ void nextdd_event(lv_obj_t* dropdown, lv_event_t event) {
 
 
 Alarm::Alarm(Pinetime::Applications::DisplayApp* app, Controllers::VibrationMotorController& vibrationmotor) : Screen(app), vibrationmotor{vibrationmotor} {
-    
+
 
     dd = lv_ddlist_create(lv_scr_act(), NULL);
     lv_obj_set_width(dd, LV_DPI * 2);
@@ -84,6 +86,7 @@ Alarm::Alarm(Pinetime::Applications::DisplayApp* app, Controllers::VibrationMoto
     
     
     btn1 = lv_btn_create(lv_scr_act(), NULL);
+    lv_obj_set_user_data(btn1, this);
     lv_obj_set_event_cb(btn1, nextdd_event);
     lv_obj_align(btn1, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -20);
     lv_btn_set_fit2(btn1, LV_FIT_TIGHT, LV_FIT_TIGHT);
@@ -123,7 +126,6 @@ void Alarm::nextDDList(){
 
             lv_ddlist_set_options(dd, "00\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50\n51\n52\n53\n54\n55\n56\n57\n58\n59");
             //lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Minute");
-            lv_obj_t* label = lv_obj_get_child(button, NULL);
             lv_label_set_text(label, "Set Alarm");
             hourinputted = true;
             NRF_LOG_INFO("%d", hour);
@@ -134,11 +136,11 @@ void Alarm::nextDDList(){
             lv_ddlist_get_selected_str(dd, minstr, 0);
             minute = atoi(minstr);
 
-            char curmonth[10] = "July";
-            int curday = 26;
-            int curhour = 16;
-            int curmin = 45;
-            int curyear = 2020;
+            char curmonth[10] = "January";
+            int curday = 1;
+            int curhour = 0;
+            int curmin = 0;
+            int curyear = 1970;
             int curmonth_num = month_number(curmonth);
             int month_num = month_number(month);
             int diff_mins = 0;
@@ -222,7 +224,7 @@ void Alarm::nextDDList(){
             }
 
 
-            alarmTimer = xTimerCreate ("alarmTimer", pdMS_TO_TICKS(60000), pdFALSE, this, xtimerCallback);
+            alarmTimer = xTimerCreate ("alarmTimer", pdMS_TO_TICKS(diff_mins*60*1000), pdFALSE, this, xtimerCallback);
             xTimerStart(alarmTimer, 0);
             NRF_LOG_INFO("alarm started");
 
@@ -234,6 +236,9 @@ void Alarm::nextDDList(){
 void Alarm::alarmStart(){
     vibrationmotor.TurnOn();
     NRF_LOG_INFO("vibration motor turned on");
+
+
+
 }
 
 
