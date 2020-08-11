@@ -3,6 +3,8 @@
 #include <FreeRTOS.h>
 #include <timers.h>
 
+#include <cstdint>
+#include <chrono>
 #include <libs/lvgl/src/lv_core/lv_style.h>
 #include <libs/lvgl/src/lv_core/lv_obj.h>
 #include <Components/VibrationMotor/VibrationMotorController.h>
@@ -14,7 +16,9 @@ namespace Pinetime {
       class Alarm: public Screen{
         public:
 
-            Alarm(DisplayApp* app, Controllers::VibrationMotorController& vibrationmotor);
+            Alarm(DisplayApp* app, 
+            Controllers::VibrationMotorController& vibrationmotor,
+            Controllers::DateTime& dateTimeController);
             ~Alarm() override;
             bool Refresh() override;
             bool OnButtonPushed() override;
@@ -27,7 +31,7 @@ namespace Pinetime {
         private:
             bool running = true;
             Controllers::VibrationMotorController& vibrationmotor;
-
+            Controllers::DateTime& dateTimeController;
 
             //pointers to LVGL objects
             lv_obj_t* dd;

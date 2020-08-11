@@ -1,6 +1,6 @@
 #include <cstdio>
-//#include <libs/date/includes/date/date.h>
-//#include <Components/DateTime/DateTimeController.h>
+#include <libs/date/includes/date/date.h>
+#include <Components/DateTime/DateTimeController.h>
 
 #include <libraries/log/nrf_log.h>
 #include <libs/lvgl/lvgl.h>
@@ -74,7 +74,7 @@ void nextdd_event(lv_obj_t* dropdown, lv_event_t event) {
 
 
 
-Alarm::Alarm(Pinetime::Applications::DisplayApp* app, Controllers::VibrationMotorController& vibrationmotor) : Screen(app), vibrationmotor{vibrationmotor} {
+Alarm::Alarm(Pinetime::Applications::DisplayApp* app, Controllers::VibrationMotorController& vibrationmotor, Controllers::DateTime& dateTimeController) : Screen(app), vibrationmotor{vibrationmotor}, dateTimeController{dateTimeController} {
 
 
     dd = lv_ddlist_create(lv_scr_act(), NULL);
@@ -136,12 +136,17 @@ void Alarm::nextDDList(){
             lv_ddlist_get_selected_str(dd, minstr, 0);
             minute = atoi(minstr);
 
-            char curmonth[10] = "January";
+            uint8_t curmonth_num = dateTimeController.Month();
+            uint8_t curday = dateTimeController.Day();
+            uint8_t curhour = dateTimeController.Hours();
+            uint8_t curmin = dateTimeController.Minutes();
+            uint16_t curyear = dateTimeController.Year();
+            /*char curmonth[10] = "January";
             int curday = 1;
             int curhour = 0;
             int curmin = 0;
             int curyear = 1970;
-            int curmonth_num = month_number(curmonth);
+            int curmonth_num = month_number(curmonth);*/
             int month_num = month_number(month);
             int diff_mins = 0;
             int cur_num_minutes = (60*curhour)+curmin;
