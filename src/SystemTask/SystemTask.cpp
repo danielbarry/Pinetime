@@ -149,6 +149,11 @@ void SystemTask::Work() {
           if(bleController.State() == Pinetime::Controllers::Ble::FirmwareUpdateStates::Validated)
             NVIC_SystemReset();
           break;
+        case Messages::OnAlarmGoOff:
+          NRF_LOG_INFO("System task works");
+          if(isSleeping) GoToRunning();
+          displayApp->PushMessage(Pinetime::Applications::DisplayApp::Messages::AlarmGoOff);
+          break;
         case Messages::OnTouchEvent:
           ReloadIdleTimer();
           break;

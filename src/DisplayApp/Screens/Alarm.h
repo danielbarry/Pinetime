@@ -17,8 +17,9 @@ namespace Pinetime {
         public:
 
             Alarm(DisplayApp* app, 
-            Controllers::VibrationMotorController& vibrationmotor,
-            Controllers::DateTime& dateTimeController);
+            Controllers::VibrationMotorController &vibrationmotor,
+            Controllers::DateTime &dateTimeController,
+            Pinetime::System::SystemTask &systemTask);
             ~Alarm() override;
             bool Refresh() override;
             bool OnButtonPushed() override;
@@ -32,6 +33,7 @@ namespace Pinetime {
             bool running = true;
             Controllers::VibrationMotorController& vibrationmotor;
             Controllers::DateTime& dateTimeController;
+            Pinetime::System::SystemTask &systemTask;
 
             //pointers to LVGL objects
             lv_obj_t* dd;

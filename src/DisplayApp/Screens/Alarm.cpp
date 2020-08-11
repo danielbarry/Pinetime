@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <libs/date/includes/date/date.h>
 #include <Components/DateTime/DateTimeController.h>
-
+#include <SystemTask/SystemTask.h>
 #include <libraries/log/nrf_log.h>
 #include <libs/lvgl/lvgl.h>
 #include "Alarm.h"
@@ -74,7 +74,9 @@ void nextdd_event(lv_obj_t* dropdown, lv_event_t event) {
 
 
 
-Alarm::Alarm(Pinetime::Applications::DisplayApp* app, Controllers::VibrationMotorController& vibrationmotor, Controllers::DateTime& dateTimeController) : Screen(app), vibrationmotor{vibrationmotor}, dateTimeController{dateTimeController} {
+Alarm::Alarm(Pinetime::Applications::DisplayApp* app, Controllers::VibrationMotorController &vibrationmotor, 
+    Controllers::DateTime &dateTimeController, Pinetime::System::SystemTask &systemTask) : 
+    Screen(app), vibrationmotor{vibrationmotor}, dateTimeController{dateTimeController}, systemTask{systemTask} {
 
 
     dd = lv_ddlist_create(lv_scr_act(), NULL);
@@ -237,8 +239,7 @@ void Alarm::nextDDList(){
 void Alarm::alarmStart(){
     vibrationmotor.TurnOn();
     NRF_LOG_INFO("vibration motor turned on");
-
-
+    systemTask.PushMessage(Pinetime::System::SystemTask::Messages::OnAlarmGoOff);
 
 }
 

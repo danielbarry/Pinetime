@@ -120,6 +120,10 @@ void DisplayApp::Refresh() {
         modal->Show(notification.message.data());
       }
         break;
+      case Messages::AlarmGoOff:
+        NRF_LOG_INFO("Display app modal logging until this point");
+        modal->Show("Alarm");
+        break;
       case Messages::TouchEvent: {
         if (state != States::Running) break;
         auto gesture = OnTouchEvent();

@@ -30,7 +30,7 @@ namespace Pinetime {
       public:
         enum class States {Idle, Running};
         enum class Messages : uint8_t {GoToSleep, GoToRunning, UpdateDateTime, UpdateBleConnection, UpdateBatteryLevel, TouchEvent, SwitchScreen,ButtonPushed,
-            NewNotification, BleFirmwareUpdateStarted, BleFirmwareUpdateFinished
+            NewNotification, AlarmGoOff, BleFirmwareUpdateStarted, BleFirmwareUpdateFinished
         };
         enum class FullRefreshDirections { None, Up, Down };
 
