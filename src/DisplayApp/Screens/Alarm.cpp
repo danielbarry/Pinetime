@@ -142,12 +142,7 @@ void Alarm::nextDDList(){
             uint8_t curmin = dateTimeController.Minutes();
             uint16_t curyear = dateTimeController.Year();
             NRF_LOG_INFO("%d-%d-%d....%d:%d", curmonth_num, curday, curyear, curhour, curmin);
-            /*char curmonth[10] = "January";
-            int curday = 1;
-            int curhour = 0;
-            int curmin = 0;
-            int curyear = 1970;
-            int curmonth_num = month_number(curmonth);*/
+
             int month_num = month_number(month);
             int diff_mins = 0;
             int cur_num_minutes = (60*curhour)+curmin;
