@@ -136,11 +136,12 @@ void Alarm::nextDDList(){
             lv_ddlist_get_selected_str(dd, minstr, 0);
             minute = atoi(minstr);
 
-            uint8_t curmonth_num = dateTimeController.Month();
-            uint8_t curday = dateTimeController.Day();
+            uint8_t curmonth_num = static_cast<uint8_t>(dateTimeController.Month());
+            uint8_t curday = static_cast<uint8_t>(dateTimeController.Day());
             uint8_t curhour = dateTimeController.Hours();
             uint8_t curmin = dateTimeController.Minutes();
             uint16_t curyear = dateTimeController.Year();
+            NRF_LOG_INFO("%d-%d-%d....%d:%d", curmonth_num, curday, curyear, curhour, curmin);
             /*char curmonth[10] = "January";
             int curday = 1;
             int curhour = 0;
