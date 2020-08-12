@@ -1,4 +1,5 @@
 #include <hal/nrf_gpio.h>
+#include <libraries/log/nrf_log.h>
 #include "VibrationMotorController.h"
 
 using namespace Pinetime::Controllers;
@@ -25,6 +26,7 @@ void VibrationMotorController::Set(VibrationMotorController::Level level) {
 }
 
 void VibrationMotorController::TurnOff() {
+  //NRF_LOG_INFO("turnoff function called");
   switch(level) {
     case Level::On: Set(Level::Off); break;
 

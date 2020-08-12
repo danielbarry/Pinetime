@@ -334,6 +334,7 @@ list(APPEND SOURCE_FILES
   DisplayApp/Screens/Meter.cpp
   DisplayApp/Screens/Gauge.cpp
   DisplayApp/Screens/Modal.cpp
+  DisplayApp/Screens/AlarmModal.cpp
   DisplayApp/Screens/BatteryIcon.cpp
   DisplayApp/Screens/BleIcon.cpp
   DisplayApp/Screens/Brightness.cpp
@@ -413,6 +414,7 @@ set(INCLUDE_FILES
   DisplayApp/Screens/Meter.h
   DisplayApp/Screens/Gauge.h
   DisplayApp/Screens/Modal.h
+  DisplayApp/Screens/AlarmModal.h 
   DisplayApp/Screens/BatteryIcon.h
   DisplayApp/Screens/BleIcon.cpp
   DisplayApp/Screens/Brightness.h

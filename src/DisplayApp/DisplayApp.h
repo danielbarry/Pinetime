@@ -17,6 +17,7 @@
 #include <DisplayApp/Screens/Clock.h>
 #include <drivers/Watchdog.h>
 #include <DisplayApp/Screens/Modal.h>
+#include <DisplayApp/Screens/AlarmModal.h>
 #include <Components/Ble/NotificationManager.h>
 #include "TouchEvents.h"
 
@@ -82,6 +83,7 @@ namespace Pinetime {
         Controllers::VibrationMotorController vibrationMotorController;
 
         std::unique_ptr<Screens::Modal> modal;
+        std::unique_ptr<Screens::AlarmModal> alarmmodal;
         Pinetime::Controllers::NotificationManager& notificationManager;
     };
   }

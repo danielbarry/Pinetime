@@ -61,7 +61,7 @@ void xtimerCallback(TimerHandle_t xTimer){
 }
 
 void nextdd_event(lv_obj_t* dropdown, lv_event_t event) {
-    NRF_LOG_INFO("button pressed");
+    //NRF_LOG_INFO("button pressed");
     if (event == LV_EVENT_RELEASED) {
         
         auto* ddList = static_cast<Alarm*>(dropdown->user_data);
@@ -107,8 +107,8 @@ void Alarm::nextDDList(){
             lv_ddlist_set_options(dd, "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31");
             //lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Day");
             monthinputted = true;
-            NRF_LOG_INFO("%d", strlen(month));
-            NRF_LOG_INFO("next");
+            //NRF_LOG_INFO("%d", strlen(month));
+            //NRF_LOG_INFO("next");
         }
         else if (dayinputted == false) {
             char daystr[10];
@@ -118,8 +118,8 @@ void Alarm::nextDDList(){
             lv_ddlist_set_options(dd, "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23");
             //v_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Hour");
             dayinputted = true;
-            NRF_LOG_INFO("%d", day);
-            NRF_LOG_INFO("next");
+            //NRF_LOG_INFO("%d", day);
+            //NRF_LOG_INFO("next");
         }
         else if (hourinputted == false) {
             char hourstr[10];
@@ -130,7 +130,7 @@ void Alarm::nextDDList(){
             //lv_obj_set_style_local_value_str(dd, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Minute");
             lv_label_set_text(label, "Set Alarm");
             hourinputted = true;
-            NRF_LOG_INFO("%d", hour);
+            //NRF_LOG_INFO("%d", hour);
             
         }
         else {
@@ -143,7 +143,7 @@ void Alarm::nextDDList(){
             uint8_t curhour = dateTimeController.Hours();
             uint8_t curmin = dateTimeController.Minutes();
             uint16_t curyear = dateTimeController.Year();
-            NRF_LOG_INFO("%d-%d-%d....%d:%d", curmonth_num, curday, curyear, curhour, curmin);
+            //NRF_LOG_INFO("%d-%d-%d....%d:%d", curmonth_num, curday, curyear, curhour, curmin);
 
             int month_num = month_number(month);
             int diff_mins = 0;
@@ -158,7 +158,7 @@ void Alarm::nextDDList(){
                     diff_mins += month_days(i, curyear);
                 }
                 diff_mins = (diff_mins * 24 * 60) - cur_num_minutes + num_minutes;
-                NRF_LOG_INFO("%d", diff_mins);
+                //NRF_LOG_INFO("%d", diff_mins);
 
             }
             else if (curmonth_num == month_num) {
@@ -188,7 +188,7 @@ void Alarm::nextDDList(){
                     }
                     else if (hour > curhour) {
                         diff_mins = num_minutes - cur_num_minutes;
-                        NRF_LOG_INFO("%d", diff_mins);
+                        //NRF_LOG_INFO("%d", diff_mins);
                     }
                     else {
                         if((curyear + 1)%4 ==0)
@@ -208,9 +208,9 @@ void Alarm::nextDDList(){
                         diff_mins += month_days(i, curyear+1);
                     }
                     diff_mins = (diff_mins * 24 * 60) - cur_num_minutes + num_minutes;
-                    NRF_LOG_INFO("%d", diff_mins);
+                    //NRF_LOG_INFO("%d", diff_mins);
                 }
-                NRF_LOG_INFO("%d", diff_mins);
+                //NRF_LOG_INFO("%d", diff_mins);
             }
             else {
                 diff_mins += month_days(curmonth_num, curyear) - curday;
@@ -223,10 +223,10 @@ void Alarm::nextDDList(){
                     diff_mins += month_days(i, curyear+1);
                 }
                 diff_mins = (diff_mins * 24 * 60) - cur_num_minutes + num_minutes;
-                NRF_LOG_INFO("%d", diff_mins);
+                //NRF_LOG_INFO("%d", diff_mins);
             }
 
-
+            NRF_LOG_INFO("%d", diff_mins);
             alarmTimer = xTimerCreate ("alarmTimer", pdMS_TO_TICKS(diff_mins*60*1000), pdFALSE, this, xtimerCallback);
             xTimerStart(alarmTimer, 0);
             NRF_LOG_INFO("alarm started");
@@ -237,8 +237,8 @@ void Alarm::nextDDList(){
 }
 
 void Alarm::alarmStart(){
-    vibrationmotor.TurnOn();
     NRF_LOG_INFO("vibration motor turned on");
+    vibrationmotor.TurnOn();
     systemTask.PushMessage(Pinetime::System::SystemTask::Messages::OnAlarmGoOff);
 
 }

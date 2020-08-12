@@ -150,8 +150,8 @@ void SystemTask::Work() {
             NVIC_SystemReset();
           break;
         case Messages::OnAlarmGoOff:
-          NRF_LOG_INFO("System task works");
           if(isSleeping) GoToRunning();
+          NRF_LOG_INFO("systemtaskreched");
           displayApp->PushMessage(Pinetime::Applications::DisplayApp::Messages::AlarmGoOff);
           break;
         case Messages::OnTouchEvent:

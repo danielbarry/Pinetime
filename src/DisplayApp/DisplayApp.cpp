@@ -42,6 +42,7 @@ DisplayApp::DisplayApp(Drivers::St7789 &lcd, Components::LittleVgl &lvgl, Driver
   msgQueue = xQueueCreate(queueSize, itemSize);
   onClockApp = true;
   modal.reset(new Screens::Modal(this));
+  alarmmodal.reset(new Screens::AlarmModal(this, vibrationMotorController));
 }
 
 void DisplayApp::Start() {
@@ -120,9 +121,9 @@ void DisplayApp::Refresh() {
         modal->Show(notification.message.data());
       }
         break;
-      case Messages::AlarmGoOff:
+      case Messages::AlarmGoOff: 
         NRF_LOG_INFO("Display app modal logging until this point");
-        modal->Show("Alarm");
+        //alarmmodal->Show("Alarm");
         break;
       case Messages::TouchEvent: {
         if (state != States::Running) break;
@@ -196,7 +197,7 @@ void DisplayApp::RunningState() {
       case Apps::Meter: currentScreen.reset(new Screens::Meter(this)); break;
       case Apps::Gauge: currentScreen.reset(new Screens::Gauge(this)); break;
       case Apps::Brightness : currentScreen.reset(new Screens::Brightness(this, brightnessController)); break;
-      case Apps::Alarm: currentScreen.reset(new Screens::Alarm(this, vibrationMotorController, dateTimeController)); break;
+      case Apps::Alarm: currentScreen.reset(new Screens::Alarm(this, vibrationMotorController, dateTimeController, systemTask)); break;
 
     }
     nextApp = Apps::None;
