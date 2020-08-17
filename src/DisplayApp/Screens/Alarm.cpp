@@ -1,7 +1,6 @@
 #include <cstdio>
 #include <libs/date/includes/date/date.h>
 #include <Components/DateTime/DateTimeController.h>
-#include <SystemTask/SystemTask.h>
 #include <libraries/log/nrf_log.h>
 #include <libs/lvgl/lvgl.h>
 #include "Alarm.h"
@@ -54,11 +53,7 @@ int month_days(int num_of_month, int year) {
         return 30;
 }
 
-void xtimerCallback(TimerHandle_t xTimer){
-    NRF_LOG_INFO("TIMER CALLED AFTER ONE MINUTE");
-    auto alarm = static_cast<Alarm *>(pvTimerGetTimerID(xTimer));
-    alarm ->alarmStart();
-}
+
 
 void nextdd_event(lv_obj_t* dropdown, lv_event_t event) {
     //NRF_LOG_INFO("button pressed");
@@ -74,9 +69,9 @@ void nextdd_event(lv_obj_t* dropdown, lv_event_t event) {
 
 
 
-Alarm::Alarm(Pinetime::Applications::DisplayApp* app, Controllers::VibrationMotorController &vibrationmotor, 
-    Controllers::DateTime &dateTimeController, Pinetime::System::SystemTask &systemTask) : 
-    Screen(app), vibrationmotor{vibrationmotor}, dateTimeController{dateTimeController}, systemTask{systemTask} {
+Alarm::Alarm(Pinetime::Applications::DisplayApp* app, 
+    Controllers::DateTime &dateTimeController, Controllers::AlarmController &alarmController) : 
+    Screen(app), dateTimeController{dateTimeController}, alarmController{alarmController} {
 
 
     dd = lv_ddlist_create(lv_scr_act(), NULL);
@@ -227,21 +222,14 @@ void Alarm::nextDDList(){
             }
 
             NRF_LOG_INFO("%d", diff_mins);
-            alarmTimer = xTimerCreate ("alarmTimer", pdMS_TO_TICKS(diff_mins*60*1000), pdFALSE, this, xtimerCallback);
-            xTimerStart(alarmTimer, 0);
-            NRF_LOG_INFO("alarm started");
+            alarmController.setxTimer(diff_mins);
 
         }
 
     
 }
 
-void Alarm::alarmStart(){
-    NRF_LOG_INFO("vibration motor turned on");
-    vibrationmotor.TurnOn();
-    systemTask.PushMessage(Pinetime::System::SystemTask::Messages::OnAlarmGoOff);
 
-}
 
 
 Alarm::~Alarm() {

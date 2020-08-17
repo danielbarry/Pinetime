@@ -7,7 +7,7 @@
 #include <chrono>
 #include <libs/lvgl/src/lv_core/lv_style.h>
 #include <libs/lvgl/src/lv_core/lv_obj.h>
-#include <Components/VibrationMotor/VibrationMotorController.h>
+#include "AlarmController.h"
 #include "Screen.h"
 
 namespace Pinetime {
@@ -17,9 +17,9 @@ namespace Pinetime {
         public:
 
             Alarm(DisplayApp* app, 
-            Controllers::VibrationMotorController &vibrationmotor,
             Controllers::DateTime &dateTimeController,
-            Pinetime::System::SystemTask &systemTask);
+            Controllers::AlarmController &alarmController
+            );
             ~Alarm() override;
             bool Refresh() override;
             bool OnButtonPushed() override;
@@ -27,13 +27,12 @@ namespace Pinetime {
             //bool OnTouchEvent(TouchEvents event) override;
             //functions
             void nextDDList();
-            void alarmStart();
+
        
         private:
             bool running = true;
-            Controllers::VibrationMotorController& vibrationmotor;
             Controllers::DateTime& dateTimeController;
-            Pinetime::System::SystemTask &systemTask;
+            Controllers::AlarmController &alarmController;
 
             //pointers to LVGL objects
             lv_obj_t* dd;
