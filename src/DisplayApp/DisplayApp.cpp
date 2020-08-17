@@ -123,7 +123,7 @@ void DisplayApp::Refresh() {
         break;
       case Messages::AlarmGoOff: 
         NRF_LOG_INFO("Display app modal logging until this point");
-        //alarmmodal->Show("Alarm");
+        alarmmodal->Show("Alarm");
         break;
       case Messages::TouchEvent: {
         if (state != States::Running) break;
