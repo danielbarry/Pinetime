@@ -356,6 +356,7 @@ list(APPEND SOURCE_FILES
   Components/DateTime/DateTimeController.cpp
   Components/Brightness/BrightnessController.cpp
   Components/VibrationMotor/VibrationMotorController.cpp
+  Components/Alarm/AlarmController.cpp
   Components/Ble/NimbleController.cpp
   Components/Ble/DeviceInformationService.cpp
   Components/Ble/CurrentTimeClient.cpp
@@ -434,7 +435,8 @@ set(INCLUDE_FILES
   Components/Ble/NotificationManager.h
   Components/DateTime/DateTimeController.h
   Components/Brightness/BrightnessController.h
-  Components/VibrationMotor/VibrationMotorController.h
+  Components/VibrationMotor/VibrationMotorController
+  Components/Alarm/AlarmController.h
   Components/Ble/NimbleController.h
   Components/Ble/DeviceInformationService.h
   Components/Ble/CurrentTimeClient.h
