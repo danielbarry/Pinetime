@@ -7,7 +7,7 @@
 #include <chrono>
 #include <libs/lvgl/src/lv_core/lv_style.h>
 #include <libs/lvgl/src/lv_core/lv_obj.h>
-#include "AlarmController.h"
+#include <Components/Alarm/AlarmController.h>
 #include "Screen.h"
 
 namespace Pinetime {

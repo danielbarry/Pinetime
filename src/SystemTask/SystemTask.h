@@ -7,6 +7,7 @@
 #include <drivers/St7789.h>
 #include <Components/Battery/BatteryController.h>
 #include <Components/VibrationMotor/VibrationMotorController.h>
+#include <Components/Alarm/AlarmController.h>
 #include <DisplayApp/DisplayApp.h>
 #include <drivers/Watchdog.h>
 #include <Components/Ble/NimbleController.h>
@@ -51,6 +52,7 @@ namespace Pinetime {
         std::unique_ptr<Pinetime::Applications::DisplayApp> displayApp;
         Pinetime::Controllers::Ble& bleController;
         Pinetime::Controllers::VibrationMotorController &vibrationmotor;
+        Pinetime::Controllers::AlarmController &alarmController;
         Pinetime::Controllers::DateTime& dateTimeController;
         QueueHandle_t systemTaksMsgQueue;
         bool isSleeping = false;

@@ -197,7 +197,7 @@ void DisplayApp::RunningState() {
       case Apps::Meter: currentScreen.reset(new Screens::Meter(this)); break;
       case Apps::Gauge: currentScreen.reset(new Screens::Gauge(this)); break;
       case Apps::Brightness : currentScreen.reset(new Screens::Brightness(this, brightnessController)); break;
-      case Apps::Alarm: currentScreen.reset(new Screens::Alarm(this, vibrationMotorController, dateTimeController, systemTask)); break;
+      case Apps::Alarm: currentScreen.reset(new Screens::Alarm(this, dateTimeController, alarmController)); break;
 
     }
     nextApp = Apps::None;

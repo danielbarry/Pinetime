@@ -1,6 +1,6 @@
 #include <cstring>
 #include <cstdlib>
-#include "AlarmController.h"
+#include <Components/Alarm/AlarmController.h>
 #include <SystemTask/SystemTask.h>
 
 using namespace Pinetime::Controllers;
@@ -12,7 +12,7 @@ void xtimerCallback(TimerHandle_t xTimer){
 }
 
 AlarmController::AlarmController(Pinetime::System::SystemTask& systemTask, 
-    Controllers::VibrationMotorController &vibrationmotor) : 
+    Pinetime::Controllers::VibrationMotorController& vibrationmotor) : 
     systemTask{systemTask}, vibrationmotor{vibrationmotor} {
 
 }
