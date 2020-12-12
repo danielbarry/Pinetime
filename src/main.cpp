@@ -37,6 +37,7 @@
 #include "drivers/SpiNorFlash.h"
 #include "drivers/St7789.h"
 #include "drivers/TwiMaster.h"
+#include "drivers/Hrs3300.h"
 #include "drivers/Cst816s.h"
 #include "systemtask/SystemTask.h"
 
@@ -57,6 +58,7 @@ static constexpr uint8_t pinLcdDataCommand = 18;
 static constexpr uint8_t pinTwiScl = 7;
 static constexpr uint8_t pinTwiSda = 6;
 static constexpr uint8_t touchPanelTwiAddress = 0x15;
+static constexpr uint8_t heartRateSensorTwiAddress = 0x44;
 
 Pinetime::Drivers::SpiMaster spi{Pinetime::Drivers::SpiMaster::SpiModule::SPI0, {
         Pinetime::Drivers::SpiMaster::BitOrder::Msb_Lsb,
@@ -82,6 +84,7 @@ Pinetime::Drivers::TwiMaster twiMaster{Pinetime::Drivers::TwiMaster::Modules::TW
                                        Pinetime::Drivers::TwiMaster::Parameters {
                                                MaxTwiFrequencyWithoutHardwareBug, pinTwiSda, pinTwiScl}};
 Pinetime::Drivers::Cst816S touchPanel {twiMaster, touchPanelTwiAddress};
+Pinetime::Drivers::Hrs3300 heartRateSensor {twiMaster, heartRateSensorTwiAddress};
 Pinetime::Components::LittleVgl lvgl {lcd, touchPanel};
 
 
@@ -236,8 +239,21 @@ int main(void) {
 
   debounceTimer = xTimerCreate ("debounceTimer", 200, pdFALSE, (void *) 0, DebounceTimerCallback);
 
-  systemTask.reset(new Pinetime::System::SystemTask(spi, lcd, spiNorFlash, twiMaster, touchPanel, lvgl, batteryController, bleController,
-                                                    dateTimeController, notificationManager));
+  systemTask.reset(
+    new Pinetime::System::SystemTask(
+      spi,
+      lcd,
+      spiNorFlash,
+      twiMaster,
+      touchPanel,
+      heartRateSensor,
+      lvgl,
+      batteryController,
+      bleController,
+      dateTimeController,
+      notificationManager
+    )
+  );
   systemTask->Start();
   nimble_port_init();
 
