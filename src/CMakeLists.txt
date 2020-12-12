@@ -357,6 +357,7 @@ list(APPEND SOURCE_FILES
         components/battery/BatteryController.cpp
         components/ble/BleController.cpp
         components/ble/NotificationManager.cpp
+        components/heartrate/HeartRateController.cpp
         components/datetime/DateTimeController.cpp
         components/brightness/BrightnessController.cpp
         components/ble/NimbleController.cpp
@@ -439,6 +440,7 @@ set(INCLUDE_FILES
         components/battery/BatteryController.h
         components/ble/BleController.h
         components/ble/NotificationManager.h
+        components/heartrate/HeartRateController.h
         components/datetime/DateTimeController.h
         components/brightness/BrightnessController.h
         components/ble/NimbleController.h
