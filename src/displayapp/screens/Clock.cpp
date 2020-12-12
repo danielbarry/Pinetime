@@ -10,6 +10,7 @@
 #include "components/battery/BatteryController.h"
 #include "components/ble/BleController.h"
 #include "components/ble/NotificationManager.h"
+#include "components/heartrate/HeartRateController.h"
 #include "../DisplayApp.h"
 
 using namespace Pinetime::Applications::Screens;
@@ -26,9 +27,11 @@ Clock::Clock(DisplayApp* app,
         Controllers::DateTime& dateTimeController,
         Controllers::Battery& batteryController,
         Controllers::Ble& bleController,
-        Controllers::NotificationManager& notificatioManager) : Screen(app), currentDateTime{{}},
+        Controllers::NotificationManager& notificatioManager,
+        Controllers::HeartRate& heartRateController) : Screen(app), currentDateTime{{}},
                                            dateTimeController{dateTimeController}, batteryController{batteryController},
-                                           bleController{bleController}, notificatioManager{notificatioManager} {
+                                           bleController{bleController}, notificatioManager{notificatioManager},
+                                           heartRateController{heartRateController} {
   displayedChar[0] = 0;
   displayedChar[1] = 0;
   displayedChar[2] = 0;
@@ -171,10 +174,9 @@ bool Clock::Refresh() {
     }
   }
 
-  // TODO heartbeat = heartBeatController.GetValue();
-  if(heartbeat.IsUpdated()) {
+  if(heartRateController.isUpdated()) {
     char heartbeatBuffer[4];
-    sprintf(heartbeatBuffer, "%d", heartbeat.Get());
+    sprintf(heartbeatBuffer, "%d", heartRateController.getBpm());
     lv_label_set_text(heartbeatValue, heartbeatBuffer);
     lv_obj_align(heartbeatIcon, lv_scr_act(), LV_ALIGN_IN_BOTTOM_LEFT, 5, -2);
     lv_obj_align(heartbeatValue, heartbeatIcon, LV_ALIGN_OUT_RIGHT_MID, 5, 0);
