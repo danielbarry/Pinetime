@@ -381,6 +381,7 @@ list(APPEND SOURCE_FILES
         displayapp/fonts/jetbrains_mono_bold_20.c
 
         systemtask/SystemTask.cpp
+        systemtask/heartrate/HeartRateTask.cpp
         drivers/TwiMaster.cpp
         )
 
@@ -464,6 +465,7 @@ set(INCLUDE_FILES
         displayapp/LittleVgl.h
         systemtask/SystemTask.h
         systemtask/SystemMonitor.h
+        systemtask/heartrate/HeartRateTask.h
         displayapp/screens/Symbols.h
         drivers/TwiMaster.h
         )
