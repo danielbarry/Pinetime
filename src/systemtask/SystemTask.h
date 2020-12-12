@@ -11,6 +11,9 @@
 #include "components/ble/NimbleController.h"
 #include "components/ble/NotificationManager.h"
 #include "displayapp/DisplayApp.h"
+#include "drivers/Hrs3300.h"
+#include "components/heartrate/HeartRateController.h"
+#include "systemtask/heartrate/HeartRateTask.h"
 #include "drivers/Watchdog.h"
 
 namespace Pinetime {
@@ -20,6 +23,7 @@ namespace Pinetime {
     class SpiNorFlash;
     class St7789;
     class TwiMaster;
+    class Hrs3300;
   }
   namespace System {
     class SystemTask {
@@ -31,7 +35,7 @@ namespace Pinetime {
         SystemTask(Drivers::SpiMaster &spi, Drivers::St7789 &lcd,
                    Pinetime::Drivers::SpiNorFlash& spiNorFlash,
                    Drivers::TwiMaster& twiMaster, Drivers::Cst816S &touchPanel,
-                   Components::LittleVgl &lvgl,
+                   Drivers::Hrs3300& heartRateSensor, Components::LittleVgl &lvgl,
                    Controllers::Battery &batteryController, Controllers::Ble &bleController,
                    Controllers::DateTime &dateTimeController,
                    Pinetime::Controllers::NotificationManager& manager);
@@ -55,11 +59,13 @@ namespace Pinetime {
         Pinetime::Drivers::SpiNorFlash& spiNorFlash;
         Pinetime::Drivers::TwiMaster& twiMaster;
         Pinetime::Drivers::Cst816S& touchPanel;
+        Pinetime::Drivers::Hrs3300& heartRateSensor;
         Pinetime::Components::LittleVgl& lvgl;
         Pinetime::Controllers::Battery& batteryController;
         std::unique_ptr<Pinetime::Applications::DisplayApp> displayApp;
         Pinetime::Controllers::Ble& bleController;
         Pinetime::Controllers::DateTime& dateTimeController;
+        std::unique_ptr<Pinetime::HeartRateTask> heartRateTask;
         QueueHandle_t systemTasksMsgQueue;
         std::atomic<bool> isSleeping{false};
         std::atomic<bool> isGoingToSleep{false};
