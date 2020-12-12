@@ -12,7 +12,7 @@
 namespace Pinetime {
   namespace Drivers {
     /**
-     * Hrs3300.h
+     * Hrs3300
      *
      * Driver for the HRS3300 heart rate sensor. The intention is to provide very
      * simple information to the caller. This class handles twi send/receive,

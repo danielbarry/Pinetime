@@ -384,6 +384,7 @@ list(APPEND SOURCE_FILES
         systemtask/SystemTask.cpp
         systemtask/heartrate/HeartRateTask.cpp
         drivers/TwiMaster.cpp
+        drivers/Hrs3300.cpp
         )
 
 list(APPEND GRAPHICS_SOURCE_FILES
@@ -470,6 +471,7 @@ set(INCLUDE_FILES
         systemtask/heartrate/HeartRateTask.h
         displayapp/screens/Symbols.h
         drivers/TwiMaster.h
+        drivers/Hrs3300.h
         )
 
 include_directories(
