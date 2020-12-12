@@ -4,6 +4,7 @@
 #include "components/ble/BleController.h"
 #include "components/datetime/DateTimeController.h"
 #include "components/ble/NotificationManager.h"
+#include "components/heartrate/HeartRateController.h"
 #include "displayapp/screens/ApplicationList.h"
 #include "displayapp/screens/Brightness.h"
 #include "displayapp/screens/Clock.h"
@@ -25,17 +26,18 @@ using namespace Pinetime::Applications;
 
 DisplayApp::DisplayApp(Drivers::St7789 &lcd, Components::LittleVgl &lvgl, Drivers::Cst816S &touchPanel,
                        Controllers::Battery &batteryController, Controllers::Ble &bleController,
-                       Controllers::DateTime &dateTimeController, Drivers::WatchdogView &watchdog,
-                       System::SystemTask &systemTask,
+                       Controllers::DateTime &dateTimeController, Controllers::HeartRate &heartRateController,
+                       Drivers::WatchdogView &watchdog, System::SystemTask &systemTask,
                        Pinetime::Controllers::NotificationManager& notificationManager) :
         lcd{lcd},
         lvgl{lvgl},
         batteryController{batteryController},
         bleController{bleController},
         dateTimeController{dateTimeController},
+        heartRateController{heartRateController},
         watchdog{watchdog},
         touchPanel{touchPanel},
-        currentScreen{new Screens::Clock(this, dateTimeController, batteryController, bleController, notificationManager) },
+        currentScreen{new Screens::Clock(this, dateTimeController, batteryController, bleController, notificationManager, heartRateController) },
         systemTask{systemTask},
         notificationManager{notificationManager} {
   msgQueue = xQueueCreate(queueSize, itemSize);
@@ -195,7 +197,7 @@ void DisplayApp::RunningState() {
       case Apps::None:
       case Apps::Launcher: currentScreen.reset(new Screens::ApplicationList(this)); break;
       case Apps::Clock:
-        currentScreen.reset(new Screens::Clock(this, dateTimeController, batteryController, bleController, notificationManager));
+        currentScreen.reset(new Screens::Clock(this, dateTimeController, batteryController, bleController, notificationManager, heartRateController));
         onClockApp = true;
         break;
 //      case Apps::Test: currentScreen.reset(new Screens::Message(this)); break;
